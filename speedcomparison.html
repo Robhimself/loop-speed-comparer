@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Speed comparison</title>
+  </head>
+  <body style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <p></p>
+    <p><h1>Remember to open your console(F12)</h1></p>
+    <button onclick="start()">Start Test</button> <a href="https://github.com/Robhimself/interesting-repo/blob/main/speedcomparison.html" target="_blank">GitHub</a>
+
+    <div
+      style="
+        min-width: 435px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: aquamarine;
+      "
+    >
+      <h3>The code:</h3>
+      <pre>
+        <code>
+            const numbers = [];
+            const ELEMENTS_COUNT = 1000000;
+      
+            for (let i = 0; i < ELEMENTS_COUNT; i++) {
+              numbers.push(i);
+            }
+      
+            function sumUsingForLoop() {
+              let sum = 0;
+              for (let i = 0; i < ELEMENTS_COUNT; i++) {
+                sum += numbers[i];
+              }
+              console.log(sum);
+            }
+      
+            function sumUsingForEach() {
+              let sum = 0;
+              numbers.forEach((number) => (sum += number));
+              console.log(sum);
+            }
+      
+            function sumUsingForOf() {
+              let sum = 0;
+              for (let number of numbers) {
+                sum += number;
+              }
+              console.log(sum);
+            }
+      
+            function sumUsingForIn() {
+              let sum = 0;
+              for (let index in numbers) {
+                sum += numbers[index];
+              }
+              console.log(sum);
+            }
+      
+            function sumUsingReduce() {
+              let sum = numbers.reduce((a, b) => a + b);
+              console.log(sum);
+            }
+      
+            function sumUsingWhile() {
+              let i = 0;
+              let sum = 0;
+              while (i < ELEMENTS_COUNT) {
+                sum += numbers[i];
+                i++;
+              }
+              console.log(sum);
+            }
+        </code>
+      </pre>
+    </div>
+
+    <script>
+      // Let's check the speed difference between for loop, forEach, for...in, for...of, reduce and while.
+      const numbers = [];
+      const ELEMENTS_COUNT = 1000000;
+
+      for (let i = 0; i < ELEMENTS_COUNT; i++) {
+        numbers.push(i);
+      }
+
+      function sumUsingForLoop() {
+        let sum = 0;
+        for (let i = 0; i < ELEMENTS_COUNT; i++) {
+          sum += numbers[i];
+        }
+        console.log(sum);
+      }
+
+      function sumUsingForEach() {
+        let sum = 0;
+        numbers.forEach((number) => (sum += number));
+        console.log(sum);
+      }
+
+      function sumUsingForOf() {
+        let sum = 0;
+        for (let number of numbers) {
+          sum += number;
+        }
+        console.log(sum);
+      }
+
+      function sumUsingForIn() {
+        let sum = 0;
+        for (let index in numbers) {
+          sum += numbers[index];
+        }
+        console.log(sum);
+      }
+
+      function sumUsingReduce() {
+        let sum = numbers.reduce((a, b) => a + b);
+        console.log(sum);
+      }
+
+      function sumUsingWhile() {
+        let i = 0;
+        let sum = 0;
+        while (i < ELEMENTS_COUNT) {
+          sum += numbers[i];
+          i++;
+        }
+        console.log(sum);
+      }
+
+      // TEST
+      function start() {
+        let forLoopElapsedTime = 0;
+        let forEachElapsedTime = 0;
+        let forOfElapsedTime = 0;
+        let forInElapsedTime = 0;
+        let reduceElapsedTime = 0;
+        let whileElapsedTime = 0;
+
+        const TEST_COUNT = 10;
+
+        for (let i = 0; i < TEST_COUNT; i++) {
+          let startTime, endTime;
+
+          startTime = window.performance.now();
+          sumUsingForLoop();
+          endTime = window.performance.now();
+          forLoopElapsedTime += endTime - startTime;
+
+          startTime = window.performance.now();
+          sumUsingForEach();
+          endTime = window.performance.now();
+          forEachElapsedTime += endTime - startTime;
+
+          startTime = window.performance.now();
+          sumUsingForOf();
+          endTime = window.performance.now();
+          forOfElapsedTime += endTime - startTime;
+
+          startTime = window.performance.now();
+          sumUsingForIn();
+          endTime = window.performance.now();
+          forInElapsedTime += endTime - startTime;
+
+          startTime = window.performance.now();
+          sumUsingReduce();
+          endTime = window.performance.now();
+          reduceElapsedTime += endTime - startTime;
+
+          startTime = window.performance.now();
+          sumUsingWhile();
+          endTime = window.performance.now();
+          whileElapsedTime += endTime - startTime;
+        }
+
+        console.log("ForLoop: ", forLoopElapsedTime);
+        console.log("ForEach: ", forEachElapsedTime);
+        console.log("ForOf: ", forOfElapsedTime);
+        console.log("ForIn: ", forInElapsedTime);
+        console.log("Reduce: ", reduceElapsedTime);
+        console.log("While: ", whileElapsedTime);
+      }
+    </script>
+  </body>
+</html>
